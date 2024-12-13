@@ -141,7 +141,7 @@ void ler_botao() {
       ultimo_estado_botao = estado_botao; // atualiza para o estado atual
     }
   }
-  if (ultimo_estado_botao == 0) { // se o ultimo estado for "LOW":
+  if (ultimo_estado_botao == 1) { // se o ultimo estado for 1:
     Serial.println("Botão pressionado!"); // printa que o botão foi pressionado
   } else {
     Serial.println("Botão não pressionado!"); // printa que o botão foi pressionado
