@@ -22,7 +22,7 @@ void setup() {
   pinMode(led_vermelho, OUTPUT); // Inicializa o led vermelho como um output
 
   // Inicialização das entradas
-  pinMode(pino_botao, INPUT); // Inicializa o pushbutton como um input
+  pinMode(pino_botao, INPUT_PULLUP); // Inicializa o pushbutton como um input
   pinMode(pino_ldr, INPUT); // Inicializa o pushbutton como um input
 
   /// Deixa os leds apagados na inicialização do sistema
