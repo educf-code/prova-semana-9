@@ -69,28 +69,11 @@ void setup() {
 }
 
 void loop() {
-  int estado_botao = digitalRead(pino_botao);  // Verifica estado do botão
-  Serial.println(estado_botao);
-
-  if (estado_botao != ultimo_estado_botao) { // se o estado atual for diferente do último estado:
-    tempo_debounce = millis(); // começa a contar o tempo do debounce
-  }
-  if ((millis() - tempo_debounce) > atraso_debounce) { // se o tempo apertado for maior que o delay que causa o debounce
-    if (estado_botao != ultimo_estado_botao) { // se o estado atual for diferente do último estado medido
-      ultimo_estado_botao = estado_botao; // atualiza para o estado atual
-    }
-  }
-  if (ultimo_estado_botao == LOW) { // se o ultimo estado for "LOW":
-    Serial.println("Botão pressionado!"); // printa que o botão foi pressionado
-  } else {
-    Serial.println("Botão não pressionado!"); // printa que o botão foi pressionado
-  }
-
 
   int estado_ldr = analogRead(pino_ldr); // variavel para controlar o valor do ldr
 
   if (estado_ldr <= limiar_ldr) { // se o valor do ldr for menor ou igual ao limiar:
-    Serial.println("Está escuro! Ligue o LED"); // printa mensagem para ligar o LED
+    Serial.println("Está escuro!"); // printa mensagem para ligar o LED
     Serial.println(estado_ldr); // printa o valor do ldr
     digitalWrite(led_amarelo, HIGH); // acende o led amarelo
     delay(1000); // espera um segundo
@@ -98,19 +81,32 @@ void loop() {
     delay(1000); // espera um segundo
 
   } else { // se o valor do ldr for maior que o limiar:
-    Serial.println("Está claro! Desligue o LED");  // printa mensagem para desligar o LED
+    Serial.println("Está claro!");  // printa mensagem para desligar o LED
     Serial.println(estado_ldr); // printa o valor do ldr
+    ler_botao();
     digitalWrite(led_amarelo, LOW); // apaga o led amarelo
+    ler_botao();
     digitalWrite(led_vermelho, LOW); // apaga o led vermelho
+    ler_botao();
+
     digitalWrite(led_verde, HIGH); //acende o led verde
+    ler_botao();
     delay(3000); //espera 3 segundos
+    ler_botao();
     digitalWrite(led_vermelho, LOW); // apaga o led vermelho
+    ler_botao();
     digitalWrite(led_verde, LOW); //apaga o led verde
+    ler_botao();
     digitalWrite(led_amarelo, HIGH); // acende o led amarelo
+    ler_botao();
     delay(2000); // espera dois segundos
+    ler_botao();
     digitalWrite(led_verde, LOW); //apaga o led verde
+    ler_botao();
     digitalWrite(led_amarelo, LOW); // apaga o led amarelo
+    ler_botao();
     digitalWrite(led_vermelho, HIGH); // acende led vermelho
+    ler_botao();
 
     if ( ultimo_estado_botao == LOW ) {
       delay(1000);
@@ -131,3 +127,23 @@ void loop() {
 
   }
 }
+
+void ler_botao() {
+  int estado_botao = digitalRead(pino_botao);  // Verifica estado do botão
+  Serial.println("Estado botao");
+  Serial.println(estado_botao);
+
+  if (estado_botao != ultimo_estado_botao) { // se o estado atual for diferente do último estado:
+    tempo_debounce = millis(); // começa a contar o tempo do debounce
+  }
+  if ((millis() - tempo_debounce) > atraso_debounce) { // se o tempo apertado for maior que o delay que causa o debounce
+    if (estado_botao != ultimo_estado_botao) { // se o estado atual for diferente do último estado medido
+      ultimo_estado_botao = estado_botao; // atualiza para o estado atual
+    }
+  }
+  if (ultimo_estado_botao == 0) { // se o ultimo estado for "LOW":
+    Serial.println("Botão pressionado!"); // printa que o botão foi pressionado
+  } else {
+    Serial.println("Botão não pressionado!"); // printa que o botão foi pressionado
+  }
+};
